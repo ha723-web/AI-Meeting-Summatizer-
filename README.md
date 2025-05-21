@@ -34,9 +34,7 @@ meeting-notes-app/
 ├── requirements.txt   # Required Python packages
 ├── images/            # Background image and design assets
 └── README.md          # Project documentation
-
 ---
-
 ## ▶️ How to Run the App Locally
 
 ### 1. Clone the repository
