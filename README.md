@@ -24,9 +24,9 @@ A clean and intuitive **Streamlit web app** that extracts **key summaries** and 
 | Language        | Python 3.8+                               |
 
 ---
-
 ## 📁 Project Structure
 
+```
 meeting-notes-app/
 ├── app.py             # Streamlit app entry point
 ├── summarizer.py      # Handles BART-based text summarization
@@ -34,6 +34,8 @@ meeting-notes-app/
 ├── requirements.txt   # Required Python packages
 ├── images/            # Background image and design assets
 └── README.md          # Project documentation
+```
+
 ---
 ## ▶️ How to Run the App Locally
 
