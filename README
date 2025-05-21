@@ -1,0 +1,35 @@
+# 🧠 AI Meeting Notes Summarizer
+
+This project is a **Streamlit web app** that extracts **action items** and **key summaries** from meeting transcripts using state-of-the-art **NLP models**. Users can either paste a transcript or upload a `.mp3`/`.wav` file to get instant summaries.
+
+---
+
+## 🔍 Features
+
+- 📝 **Text-based summarization**
+- 🎧 **Audio transcription** using Whisper
+- ⚡ Fast, accurate summarization using Hugging Face Transformers
+- 🎯 Clean UI with a professional landing page
+- 🧪 Interactive via Streamlit
+
+---
+
+## 🚀 Demo
+
+> 📷 _Insert a screenshot or Streamlit Cloud link here when deployed._
+
+---
+
+## 🛠️ Tech Stack
+
+| Category         | Tools / Libraries                                   |
+|------------------|-----------------------------------------------------|
+| Frontend         | Streamlit                                           |
+| NLP Model        | `facebook/bart-large-cnn` via `transformers`        |
+| Audio Transcribe | `whisper`                                           |
+| Language         | Python 3.8+                                         |
+
+---
+
+## 📁 Folder Structure
+
