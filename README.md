@@ -27,13 +27,16 @@ A clean and intuitive **Streamlit web app** that extracts **key summaries** and 
 ## 📁 Project Structure
 
 ```
-meeting-notes-app/
-├── app.py             # Streamlit app entry point
-├── summarizer.py      # Handles BART-based text summarization
-├── transcriber.py     # Handles Whisper-based audio transcription
-├── requirements.txt   # Required Python packages
-├── images/            # Background image and design assets
-└── README.md          # Project documentation
+AI-Meeting-Summarizer/
+├── app.py
+├── summarizer.py
+├── transcriber.py
+├── requirements.txt ✅
+├── packages.txt      ✅
+├── commands.txt      ✅
+├── README.md
+├── images/
+
 ```
 
 ---
