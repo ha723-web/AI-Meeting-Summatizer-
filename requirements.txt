@@ -4,4 +4,4 @@ torch
 pydub
 pandas
 spacy
-whisper @ git+https://github.com/openai/whisper.git
+openai-whisper
