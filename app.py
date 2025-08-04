@@ -7,6 +7,8 @@ import spacy
 import os
 
 import spacy
+
+# Just load directly — model is installed from requirements.txt
 nlp = spacy.load("en_core_web_sm")
 
 
