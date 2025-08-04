@@ -5,19 +5,19 @@ import re
 # Your existing BART summarizer
 summarizer = pipeline("summarization", model="facebook/bart-large-cnn", device=-1)
 
-# ✅ Additional lightweight function (NEW)
+#lightweight function (NEW)
 def extract_meeting_time(text):
     """
-    Extracts meeting scheduling info like 'regroup on Thursday' etc.
-    Doesn't interfere with your original summarization logic.
+    Finds phrases like 'next sync will be on Wednesday at 2 PM'
     """
-    pattern = r'\b(regroup|next meeting|sync|call|meet)[^\n]*\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)[^\n.]*'
+    pattern = r'\b(regroup|next (sync|meeting|call)|meeting)[^\n.]*?(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)(.*?)\b(\d{1,2} ?[apAP][mM])?'
     match = re.search(pattern, text, re.IGNORECASE)
     if match:
         return f"\n\n🗓️ {match.group(0).strip().capitalize()}."
     return ""
 
-# ✅ Updated function with both summary + meeting extraction
+
+#function with both summary + meeting extraction
 def summarize_text(text, max_len=1200):
     if len(text.strip()) == 0:
         return "⚠️ No text provided."
