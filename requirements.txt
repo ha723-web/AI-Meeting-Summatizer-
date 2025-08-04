@@ -3,7 +3,7 @@ transformers
 torch
 pydub
 pandas
-spacy
-openai-whisper
 
-https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.5.0/en_core_web_sm-3.5.0-py3-none-any.whl
+openai-whisper
+spacy==3.4.4
+https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.4.1/en_core_web_sm-3.4.1-py3-none-any.whl
