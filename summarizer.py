@@ -1,28 +1,34 @@
 from transformers import pipeline
 import re
 
-# BART Summarizer as-is
+# Force CPU usage
 summarizer = pipeline("summarization", model="facebook/bart-large-cnn", device=-1)
 
-# Extracts 'next sync on Thursday at 2 PM' etc.
 def extract_meeting_time(text):
-    pattern = r'\b(?:regroup|next (?:sync|meeting|call)).*?(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)(?:.*?(\d{1,2}\s?(?:AM|PM)))?'
+    """
+    Finds phrases like:
+    - 'next sync is on Friday at 3 PM'
+    - 'meeting scheduled for Thursday at 2pm'
+    - 'let’s reconvene on Monday 11 AM'
+    """
+    pattern = r'\b(?:reconvene|sync|meet(?:ing)?|call|review)[^.\n]{0,40}?(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s*(at)?\s*(\d{1,2})([:.]\d{2})?\s*(AM|PM)?'
     match = re.search(pattern, text, re.IGNORECASE)
-    
     if match:
-        day = match.group(1)
-        time = match.group(2)
-        if time:
-            return f"\n📅 Next Meeting: {day} at {time}"
-        else:
-            return f"\n📅 Next Meeting: {day}"
+        day = match.group(1).capitalize()
+        hour = match.group(3)
+        minute = match.group(4) if match.group(4) else ''
+        ampm = match.group(5).upper() if match.group(5) else ''
+        return f"\n\n📅 Next Meeting: {day} at {hour}{minute} {ampm}".strip()
     return ""
-
-# Combine original BART summary with optional meeting info
+    
 def summarize_text(text, max_len=1200):
     if len(text.strip()) == 0:
         return "⚠️ No text provided."
-
+    
+    # Step 1: Main summary
     summary = summarizer(text, max_length=200, min_length=30, do_sample=False)[0]['summary_text']
+    
+    # Step 2: Extract time info
     meeting_info = extract_meeting_time(text)
+
     return summary + meeting_info
