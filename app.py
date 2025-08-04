@@ -103,7 +103,7 @@ def set_hero_background(image_path):
 
 
 # Inject custom CSS
-st.markdown(set_hero_background("images/1.jpg"), unsafe_allow_html=True)
+# st.markdown(set_hero_background("images/1.jpg"), unsafe_allow_html=True)
 
 # Hero Section HTML
 st.markdown("""
