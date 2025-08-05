@@ -33,10 +33,11 @@ def summarize_text(text, max_len=1200):
     # 1. Preprocess into narrative form
     narrative_text = preprocess_to_narrative(text)
 
-    # 2. Summarize using BART
-    summary = summarizer(narrative_text, max_length=200, min_length=40, do_sample=False)[0]['summary_text']
+    # 2. Summarize using BART with better max length
+    summary = summarizer(narrative_text, max_length=130, min_length=40, do_sample=False)[0]['summary_text']
 
     # 3. Extract meeting time
     meeting_info = extract_meeting_time(text)
 
     return summary.strip() + meeting_info
+
