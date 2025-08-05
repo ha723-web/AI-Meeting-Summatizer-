@@ -44,7 +44,7 @@ def summarize_text(text, max_len=1200):
     processed_text = preprocess_text(text)
 
     # Step 1: Main summary
-    summary = summarizer(processed_text, max_length=200, min_length=30, do_sample=False)[0]['summary_text']
+    summary = summarizer(processed_text, max_length=1000, min_length=30, do_sample=False)[0]['summary_text']
 
     # Step 2: Extract time info
     meeting_info = extract_meeting_time(text)
