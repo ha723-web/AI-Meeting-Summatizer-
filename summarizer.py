@@ -1,26 +1,22 @@
 from transformers import pipeline
 import re
 
-# Load summarizer pipeline
+# Load the summarizer
 summarizer = pipeline("summarization", model="facebook/bart-large-cnn", device=-1)
 
-def preprocess_text(text):
-    """
-    Convert dialogues to narration for better summarization.
-    E.g., 'Emma: QA done' → 'Emma said, QA done.'
-    """
+def preprocess_to_narrative(text):
     lines = text.strip().split('\n')
-    paragraphs = []
+    result = []
     for line in lines:
         if ':' in line:
-            speaker, sentence = line.split(':', 1)
-            paragraphs.append(f"{speaker.strip()} said, {sentence.strip()}")
+            speaker, message = line.split(':', 1)
+            result.append(f"{speaker.strip()} said {message.strip()}.")
         else:
-            paragraphs.append(line.strip())
-    return " ".join(paragraphs)
+            result.append(line.strip())
+    return " ".join(result)
 
 def extract_meeting_time(text):
-    pattern = r'\b(?:reconvene|sync|meet(?:ing)?|call|review)[^.\n]{0,40}?(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s*(at)?\s*(\d{1,2})([:.]\d{2})?\s*(AM|PM)?'
+    pattern = r'\b(?:reconvene|sync|meet(?:ing)?|call|review|check-in)[^.\n]{0,50}?(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s*(at)?\s*(\d{1,2})([:.]\d{2})?\s*(AM|PM)?'
     match = re.search(pattern, text, re.IGNORECASE)
     if match:
         day = match.group(1).capitalize()
@@ -34,9 +30,13 @@ def summarize_text(text, max_len=1200):
     if len(text.strip()) == 0:
         return "⚠️ No text provided."
 
-    # ✅ THIS IS ESSENTIAL
-    cleaned_text = preprocess_text(text)
+    # 1. Preprocess into narrative form
+    narrative_text = preprocess_to_narrative(text)
 
-    summary = summarizer(cleaned_text, max_length=200, min_length=30, do_sample=False)[0]['summary_text']
+    # 2. Summarize using BART
+    summary = summarizer(narrative_text, max_length=200, min_length=40, do_sample=False)[0]['summary_text']
+
+    # 3. Extract meeting time
     meeting_info = extract_meeting_time(text)
-    return summary + meeting_info
+
+    return summary.strip() + meeting_info
